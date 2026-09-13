@@ -1,0 +1,494 @@
+.services {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 20px;
+    max-width: 700px;
+    text-align: center;
+    margin-top: 20px;
+}
+
+.service {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.service i {
+    font-size: 50px;
+    color: #333;
+}
+
+.service h3 {
+    margin: 10px 0 0;
+    font-size: 18px;
+    color: #333;
+}
+
+.gaming-services {
+    text-align: center;
+    padding: 20px;
+    font-size: smaller;
+}
+
+.wrapper { /* to make the content in the centre */
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.icon {
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.badminton {
+    background-image: url('data:image/svg+xml;charset=UTF-8,<svg xmlns%3D"http%3A//www.w3.org/2000/svg" viewBox%3D"0 0 24 24" fill%3D"none" stroke%3D"currentColor" stroke-width%3D"2" stroke-linecap%3D"round" stroke-linejoin%3D"round" class%3D"feather feather-droplet"%3E%3Cpath d%3D"M12 2.69l7.66 7.66c2.15 2.15 2.82 5.45 2.02 8.36-1.32 4.9-5.96 7.66-10.58 5.34C6.16 22.5 4 18.88 5.34 14c.8-2.91.13-6.21-2.02-8.36L12 2.69z"%3E%3C/path%3E%3C/svg%3E');
+}
+
+/* Existing styles... */
+
+.detail-header {
+    display: flex;
+    flex-direction: column; /* Stack the elements vertically */
+    align-items: center; /* Center items horizontally */
+    margin-bottom: 20px;
+    position: relative; /* Relative positioning to place the back button */
+}
+
+.detail-header h2 {
+    font-size: 24px;
+    margin: 0;
+    text-align: center;
+}
+
+.detail-header .fee {
+    font-size: 18px;
+    color: #666;
+    margin-top: 5px;
+    text-align: center;
+}
+
+.detail-body p {
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+
+.detail-services {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.detail-service {
+    flex: 1 1 calc(33.333% - 20px);
+    background-color: #f0f0f0;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.detail-service h4 {
+    margin-bottom: 10px;
+    font-size: 18px;
+    color: #333;
+}
+
+.detail-service p {
+    margin: 0;
+    font-size: 16px;
+    color: #555;
+}
+
+.detail-cost {
+    flex: 1 1 100%;
+    background-color: #e0e0e0;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.confirm-btn {
+    background-color: #28a745;
+    color: #fff;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 20px;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+
+.confirm-btn:hover {
+    background-color: #218838;
+}
+
+.back-btn {
+    background: none;
+    border: none;
+    color: #007bff;
+    cursor: pointer;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    position: absolute; /* Absolute positioning */
+    top: 0;
+    left: 0;
+}
+
+.back-btn i {
+    margin-right: 5px;
+}
+
+/* Add these new styles */
+
+.seat-selector,
+.date-selector,
+.field-selector {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: #fff;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+    display: none;
+    z-index: 1000;
+    max-width: 100%;
+}
+
+.seat-selector-content,
+.date-selector-content,
+.field-selector-content {
+    padding: 20px;
+    text-align: center;
+}
+
+.seats-options,
+.options {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 20px;
+}
+
+.members,
+.guests,
+.date-option,
+.field-option {
+    text-align: center;
+}
+
+.seat-option,
+.date-option input,
+.field-option input {
+    display: none;
+}
+
+.seat-option,
+.date-option label,
+.field-option label {
+    display: inline-block;
+    background: #f0f0f0;
+    padding: 10px 20px;
+    margin: 5px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.seat-option.selected,
+.date-option input:checked + label,
+.field-option input:checked + label {
+    background: #28a745;
+    color: #fff;
+}
+
+.date-option,
+.field-option {
+    display: flex;
+    align-items: center;
+}
+
+.date-option label,
+.field-option label {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.date-option strong,
+.field-option strong {
+    margin-right: 10px;
+}
+
+.date-detail {
+    font-size: 12px;
+    color: #666;
+}
+
+.total-seats,
+.total-seats span {
+    font-size: 18px;
+    margin-bottom: 20px;
+}
+
+.confirm-seats-btn,
+.confirm-field-btn {
+    background-color: #28a745;
+    color: #fff;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 20px;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+
+.confirm-seats-btn:hover,
+.confirm-field-btn:hover {
+    background-color: #218838;
+}
+
+/* Add these new styles for the timing selector */
+
+.timing-selector {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: #fff;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+    display: none;
+    z-index: 1000;
+    max-width: 100%;
+}
+
+.timing-selector-content {
+    padding: 20px;
+    text-align: center;
+}
+
+.timing-option {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+    background: #f0f0f0;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.timing-option.unavailable {
+    background: #ddd;
+    cursor: not-allowed;
+}
+
+.timing-option input {
+    display: none;
+}
+
+.timing-option label {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.timing-option label strong {
+    font-size: 16px;
+    color: #333;
+}
+
+.timing-option label p {
+    font-size: 12px;
+    color: #666;
+}
+
+.timing-option.selected,
+.timing-option input:checked + label {
+    background: #28a745;
+    color: #fff;
+}
+
+.confirm-timing-btn {
+    background-color: #28a745;
+    color: #fff;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 20px;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+
+.confirm-timing-btn:hover {
+    background-color: #218838;
+}
+
+/* Notification Styles */
+.booking-notification {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #28a745;
+    color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.booking-notification h3 {
+    margin: 0 0 10px 0;
+}
+
+.booking-notification p {
+    margin: 0 0 10px 0;
+}
+
+.close-notification-btn {
+    background-color: #218838;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.close-notification-btn:hover {
+    background-color: #1e7e34;
+}
+
+/* Timing Selector Styles */
+.timing-selector {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: #fff;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+    display: none;
+    z-index: 1000;
+    max-width: 100%;
+}
+
+.timing-selector-content {
+    padding: 20px;
+    text-align: center;
+}
+
+.timing-options {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+}
+
+.timing-option input {
+    display: none;
+}
+
+.timing-option label {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #f0f0f0;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.timing-option label:hover {
+    background: #d0d0d0;
+}
+
+.timing-option input:checked + label {
+    background: #28a745;
+    color: #fff;
+}
+
+.timing-option label strong {
+    font-size: 16px;
+}
+
+.timing-option label .timing-fee {
+    font-size: 14px;
+    color: #666;
+}
+
+.confirm-timing-btn {
+    background-color: #28a745;
+    color: #fff;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 20px;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+
+.confirm-timing-btn:hover {
+    background-color: #218838;
+}
+
+.notification-container {
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+    width: 300px;
+    z-index: 1000;
+}
+
+.notification {
+    background-color: #28a745;
+    color: #fff;
+    padding: 15px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.close-notification {
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.time-option {
+    display: flex;
+    align-items: center;
+    margin: 10px 0;
+}
+
+.time-option input {
+    margin-right: 10px;
+}
+
+.booked-label {
+    color: red;
+    font-weight: bold;
+}
+
+.timing-option.booked label {
+    color: red;
+}
+
+
+

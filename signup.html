@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SignUp</title>
+    <link rel="stylesheet" href="/signup.css">
+</head>
+<body>
+    <div class="form-container" id="signupContainer">
+        <h2>SignUp</h2>
+        <form id="signupForm" method="post">
+            <div class="form-group">
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="username" placeholder="Enter your name" required autocomplete="off">
+            </div>
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" placeholder="Enter your email" required autocomplete="off">
+            </div>
+            <div class="form-group">
+                <div class="password-container">
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" name="password" placeholder="password" required>
+                    <span class="eye-icon" onclick="togglePassword()">&#128065;</span>
+                </div>
+            </div>
+            <div class="terms-container">
+                <input type="checkbox" id="terms" name="terms" required>
+                <label for="terms">I accept the <a href="terms.html">Terms and Conditions</a></label>
+            </div>
+            <div class="captcha-container">
+                <input type="checkbox" id="captcha-checkbox" required>
+                <div class="captcha-text">I'm not a robot</div>
+                <div class="captcha-icon">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M22.55 10.43C22.21 5.88 18.42 2 13.8 2C10.79 2 8.12 3.65 6.82 6.2C6.42 6.1 6 6.04 5.57 6.02C2.93 6.02 0.8 8.16 0.8 10.8C0.8 13.44 2.93 15.58 5.57 15.58C6.98 15.58 8.23 14.98 9.07 14C9.33 14.4 9.68 14.75 10.1 15.04C10.72 15.45 11.45 15.73 12.21 15.84C12.1 16.18 12.04 16.54 12.04 16.91C12.04 18.93 13.75 20.64 15.77 20.64C17.79 20.64 19.5 18.93 19.5 16.91C19.5 16.37 19.38 15.85 19.18 15.38C20.41 14.86 21.47 14.1 22.3 13.12C23.17 12.1 23.71 10.89 23.9 9.61C23.98 9.08 23.98 8.54 23.88 8.03C23.8 8.2 23.71 8.35 23.6 8.5C23.23 9.04 22.81 9.52 22.36 9.95C22.42 10.11 22.49 10.27 22.55 10.43ZM6.53 13.6C5.54 13.6 4.73 12.79 4.73 11.8C4.73 10.81 5.54 10 6.53 10C7.52 10 8.33 10.81 8.33 11.8C8.33 12.79 7.52 13.6 6.53 13.6ZM17.73 18.2C16.92 18.2 16.28 17.56 16.28 16.75C16.28 15.94 16.92 15.3 17.73 15.3C18.54 15.3 19.18 15.94 19.18 16.75C19.18 17.56 18.54 18.2 17.73 18.2Z" fill="#000000"/>
+                    </svg>
+                 </div>
+               </div>
+               
+               <div class="recaptcha-logo">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="#4285F4" d="M3.25 8.35A8.75 8.75 0 0112 3.25a8.66 8.66 0 016.14 2.52l-2.6 2.6h7.21V1.66l-2.64 2.64A11.88 11.88 0 0012 .05C6.23.05 1.34 4.39.13 10.01L3.25 8.35z"/><path fill="#34A853" d="M22.34 13.99l-3.12 1.66a8.75 8.75 0 01-14.95-3.72l2.96-1.34a4.99 4.99 0 009.01 1.32L11.9 9.95h8.34v7.33l-2.61-2.62a10.86 10.86 0 01-5.17 2.73A10.94 10.94 0 01.03 12a11.02 11.02 0 01.94-4.53L0 6.86A12.04 12.04 0 00.05 12a12.02 12.02 0 0011.91 12c5.22 0 9.64-3.22 11.38-7.68z"/></svg>
+                    <span>reCAPTCHA Privacy - Terms</span>
+                </div>
+        
+            <button type="submit" class="submit-btn">Submit</button>
+        </form>
+        <small id="error-message" style="color:red;"></small>
+        <small id="success-message" style="color:green;"></small>
+    </div>
+    <script>
+        // Function to toggle password visibility
+        function togglePassword() {
+            var passwordField = document.getElementById('password');
+            var passwordFieldType = passwordField.type;
+            if (passwordFieldType === 'password') {
+                passwordField.type = 'text';
+            } else {
+                passwordField.type = 'password';
+            }
+        }
+
+        document.getElementById('signupForm').addEventListener('submit', async function(event) {
+            event.preventDefault();
+            const username = document.getElementById('name').value;
+            const email = document.getElementById('email').value; // Capture email field
+            const password = document.getElementById('password').value;
+            const terms = document.getElementById('terms').checked;
+            const captcha = document.getElementById('captcha-checkbox').checked;
+            const errorMessageDiv = document.getElementById('error-message');
+            const successMessageDiv = document.getElementById('success-message');
+
+            errorMessageDiv.style.display = 'none';
+            successMessageDiv.style.display = 'none';
+
+            if (!terms) {
+                showErrorMessage('You must agree to the terms and conditions.');
+                return;
+            }
+
+            if (!captcha) {
+                showErrorMessage('You must complete the CAPTCHA.');
+                return;
+            }
+
+            if (!isValidPassword(password)) {
+                showErrorMessage('Password must be more than 5 characters and contain at least one special character.');
+                return;
+            }
+
+            const response = await fetch('/signup', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ username, email, password }) // Send email to the server
+            });
+
+            const result = await response.text();
+
+            if (response.ok) {
+                showSuccessMessage('SignUp successful, redirecting to the home page');
+                setTimeout(() => {
+                    window.location.href = 'Main-2.html';
+                }, 3000);
+            } else {
+                showErrorMessage(result);
+            }
+        });
+
+        function isValidPassword(password) {
+            const specialCharacterRegex = /[!@#$%^&*(),.?":{}|<>]/;
+            return password.length > 5 && specialCharacterRegex.test(password);
+        }
+
+        function showErrorMessage(message) {
+            const errorMessageDiv = document.getElementById('error-message');
+            errorMessageDiv.textContent = message;
+            errorMessageDiv.style.display = 'block';
+        }
+
+        function showSuccessMessage(message) {
+            const successMessageDiv = document.getElementById('success-message');
+            successMessageDiv.textContent = message;
+            successMessageDiv.style.display = 'block';
+        }
+
+        // Redirect to CAPTCHA page when checkbox is clicked
+        document.getElementById('captcha-checkbox').addEventListener('click', function() {
+            window.location.href = '/captcha.html';
+        });
+
+        // Check if redirected back with a successful CAPTCHA verification
+        window.onload = function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const captchaSuccess = urlParams.get('captchaSuccess');
+            if (captchaSuccess === 'true') {
+                document.getElementById('captcha-checkbox').checked = true;
+            }
+        };
+    </script>
+</body>
+</html>
+
+

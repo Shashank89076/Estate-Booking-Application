@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RedApp - Health and Body Fat Calculator</title>
+    <link rel="stylesheet" href="/Main-styles.css">
+    <link rel="stylesheet" href="/health.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script defer src="health.js"></script>
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <div class="menu-icon" onclick="toggleMenu()">
+                    <div class="menu-line"></div>
+                    <div class="menu-line"></div>
+                    <div class="menu-line"></div>
+                </div>
+
+                <li class="hidden"><a href="Untitled-2.html">................................................................................................................</a></li> 
+
+                <li><a href="Login.html" id="login">Login</a></li>
+                <div class="login-container">
+                    <i class="fas fa-user-circle login-icon"></i>
+                </div>
+
+                <script defer>
+
+                    document.addEventListener('DOMContentLoaded', () => {
+                        console.log('DOM fully loaded and parsed'); // Check if script runs
+                        const username = sessionStorage.getItem('username');
+                        console.log('Retrieved username from sessionStorage:', username); // Check if username is retrieved
+            
+                        if (username) {
+                            const loginElement = document.getElementById('login');
+                            console.log('Login element:', loginElement); // Check if element is found
+            
+                            if (loginElement) {
+                                loginElement.outerHTML = `<span id="login">Welcome Back, ${username}</span>`;
+                            } else {
+                                console.error('Element with id="login" not found');
+                            }
+                        }
+                    });
+                </script>
+
+                 <div class="dots" onclick="toggleMenu()">
+                 <div class="dot"></div>
+                 <div class="dot"></div>
+                 <div class="dot"></div>
+                 </div> 
+            </ul> 
+        </nav>
+    </header>
+    
+    <div class="navbar">
+        <a href="Main-2.html" class="nav-item">
+            <i class="fas fa-home"></i>
+            <p>Home</p>
+        </a>
+        <div class="nav-item">
+            <i class="fas fa-user"></i>
+            <p>Profile</p>
+        </div>
+        <div class="nav-item">
+            <i class="fas fa-users"></i>
+            <p>Health</p>
+        </div>
+        <a href="Club.html" class="nav-item">
+            <i class="fas fa-building"></i>
+            <p>Club</p>
+        </a>
+    </div>
+
+    <!-- Body Fat Calculation Section -->
+    <div class="container">
+        <h1>Health and Body Fat Information</h1>
+        <p>This section provides insights on body fat percentage and general health guidelines.</p>
+    
+        <div class="input-container">
+            <label for="health-age">Enter Age (years)</label>
+            <input type="number" id="health-age" placeholder="Age (minimum 21)" min="21">
+        </div>
+    
+        <div class="input-container">
+            <label for="health-abdomen">Enter Abdomen Circumference (cm)</label>
+            <input type="number" id="health-abdomen" placeholder="Abdomen Circumference (minimum 60 cm)" min="60">
+        </div>
+    
+        <div class="visual-section">
+            <img src="/where_to_measure.jpg" alt="Body Fat Diagram">
+        </div>
+    
+        <button id="calculate-btn" onclick="calculateHealth()">Calculate Health Indicator</button>
+
+<div id="health-result" style="display:none;">
+    <h3>Estimated Body Fat: <span id="health-bodyfat">0%</span></h3>
+
+     <!-- Bodyfat Slider with Category Demarcations -->
+    <div class="bodyfat-bar-container">
+        <div class="bodyfat-bar">
+            <div class="bodyfat-marker" id="bodyfat-marker"></div>
+        </div>
+        <!-- Demarcations for Very Thin, Normal, High, and Obese -->
+        <div class="bodyfat-categories">
+            <div class="category-label">Very Thin</div>
+            <div class="category-label">Normal</div>
+            <div class="category-label">High</div>
+            <div class="category-label">Obese</div>
+        </div>
+        <div class="bodyfat-ranges">
+            <div class="range-label">0-8%</div>
+            <div class="range-label">8-20%</div>
+            <div class="range-label">20-25%</div>
+            <div class="range-label">25-50%</div>
+        </div>
+    </div>
+
+
+    <p><span id="bodyfat-category">Very Thin</span></p>
+</div>
+
+    </div>
+    </div>
+
+    <script>
+
+    // Function to calculate health based on user input (age and abdomen)
+    function calculateRanges(age) {
+    let ranges = {
+        veryThin: [0, 8],
+        normal: [8, 20],
+        high: [20, 25],
+        obese: [25, 50]
+    };
+
+    // Adjust ranges based on age
+    if (age < 30) {
+        ranges = {
+            veryThin: [0, 8],
+            normal: [8, 20],
+            high: [20, 25],
+            obese: [25, 50]
+        };
+    } else if (age >= 30 && age <= 50) {
+        ranges = {
+            veryThin: [0, 10],
+            normal: [10, 22],
+            high: [22, 28],
+            obese: [28, 55]
+        };
+    } else if (age > 50) {
+        ranges = {
+            veryThin: [0, 12],
+            normal: [12, 25],
+            high: [25, 30],
+            obese: [30, 60]
+        };
+    }
+
+    return ranges;
+}
+
+function calculateHealth() {
+    const age = parseFloat(document.getElementById('health-age').value);
+    const abdomen = parseFloat(document.getElementById('health-abdomen').value);
+
+    if (isNaN(age) || isNaN(abdomen) || age < 21 || abdomen < 60) {
+        alert("Please enter valid values (Age >= 21, Abdomen Circumference >= 60).");
+        return;
+    }
+
+    const bodyfat = (-31.8595 + (0.0554 * age) + (0.5281 * abdomen)).toFixed(2);
+    document.getElementById('health-bodyfat').innerHTML = `${bodyfat}%`;
+
+    // Get the ranges based on age
+    const ranges = calculateRanges(age);
+
+    // Display the result section
+    document.getElementById('health-result').style.display = 'block';
+
+    // Update range labels under the slider based on age
+    document.querySelectorAll('.range-label')[0].textContent = `${ranges.veryThin[0]}-${ranges.veryThin[1]}%`;
+    document.querySelectorAll('.range-label')[1].textContent = `${ranges.normal[0]}-${ranges.normal[1]}%`;
+    document.querySelectorAll('.range-label')[2].textContent = `${ranges.high[0]}-${ranges.high[1]}%`;
+    document.querySelectorAll('.range-label')[3].textContent = `${ranges.obese[0]}-${ranges.obese[1]}%`;
+
+    // Calculate marker position relative to the current ranges
+    let category = '';
+    let bodyfatValue = parseFloat(bodyfat);
+    let markerPosition = 0;
+
+    const veryThinRange = ranges.veryThin[1] - ranges.veryThin[0];
+    const normalRange = ranges.normal[1] - ranges.normal[0];
+    const highRange = ranges.high[1] - ranges.high[0];
+    const obeseRange = ranges.obese[1] - ranges.high[1];
+
+    const totalRange = veryThinRange + normalRange + highRange + obeseRange;
+
+    // Adjust markerPosition based on body fat within the appropriate range
+    if (bodyfatValue <= ranges.veryThin[1]) {
+        category = 'Very Thin';
+        markerPosition = ((bodyfatValue - ranges.veryThin[0]) / veryThinRange) * (100 * (veryThinRange / totalRange));
+    } else if (bodyfatValue > ranges.veryThin[1] && bodyfatValue <= ranges.normal[1]) {
+        category = 'Normal';
+        markerPosition = (100 * (veryThinRange / totalRange)) + 
+                         ((bodyfatValue - ranges.normal[0]) / normalRange) * (100 * (normalRange / totalRange));
+    } else if (bodyfatValue > ranges.normal[1] && bodyfatValue <= ranges.high[1]) {
+        category = 'High';
+        markerPosition = (100 * ((veryThinRange + normalRange) / totalRange)) + 
+                         ((bodyfatValue - ranges.high[0]) / highRange) * (100 * (highRange / totalRange));
+    } else {
+        category = 'Obese';
+        markerPosition = (100 * ((veryThinRange + normalRange + highRange) / totalRange)) + 
+                         ((bodyfatValue - ranges.obese[0]) / obeseRange) * (100 * (obeseRange / totalRange));
+    }
+
+    // Update the marker's position and category
+    const marker = document.getElementById('bodyfat-marker');
+    marker.style.left = `${markerPosition}%`;
+
+    // Update the category display
+    document.getElementById('bodyfat-category').innerHTML = `Category: ${category}`;
+}
+
+
+
+
+
+</script>
+
+</body>
+</html>

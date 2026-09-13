@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RedApp</title>
+    <link rel="stylesheet" href="/Main-styles.css">
+    <link rel="stylesheet" href="/Club-styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <div class="menu-icon" onclick="toggleMenu()">
+                   <div class="menu-line"></div>
+                   <div class="menu-line"></div>
+                   <div class="menu-line"></div>
+                </div>
+
+                <li class="hidden"><a href="Untitled-2.html">................................................................................................................</a></li> 
+
+                <li><a href="login.html" id="login-link">Login</a></li>
+                    
+                </head>
+                <body>
+                    <div class="login-container">
+                        <i class="fas fa-user-circle login-icon"></i>
+                    </div>
+
+                 <div class="dots" onclick="toggleMenu()">
+                 <div class="dot"></div>
+                 <div class="dot"></div>
+                 <div class="dot"></div>
+                 </div> 
+            </ul> 
+        </nav>
+    </header>
+    
+    <div class="navbar">
+        <a href="Main-2.html" class="nav-item">
+            <i class="fas fa-home"></i>
+            <p>Home</p>
+        </a>
+        <div class="nav-item">
+            <i class="fas fa-user"></i>
+            <p>Profile</p>
+        </div>
+        <a href="health.html" class="nav-item">
+            <i class="fas fa-users"></i>
+            <p>Health</p>
+        </a>
+        <div class="nav-item">
+            <i class="fas fa-building"></i>
+            <p>Club</p>
+        </div>
+    </div>
+
+<main id="main-content">
+    <div class="gaming-services">
+        <h1>Gaming Services</h1>
+
+        <div class="wrapper">
+            <div class="services">
+                <div class="service" onclick="showDetail('badminton')">
+                    <i class='fas fa-baseball-ball'></i>
+                    <h3>Baseball</h3>
+                </div>
+                <div class="service" onclick="showDetail('football')">
+                    <i class="fas fa-futbol"></i>
+                    <h3>Football</h3>
+                </div>
+                <div class="service" onclick="showDetail('cardioGym')">
+                    <i class="fas fa-dumbbell"></i>
+                    <h3>Cardio Gym</h3>
+                </div>
+                <div class="service" onclick="showDetail('carrom')">
+                    <i class="fas fa-table"></i>
+                    <h3>Carrom</h3>
+                </div>
+                <div class="service" onclick="showDetail('gymnasium')">
+                    <i class="fas fa-dumbbell"></i>
+                    <h3>Gymnasium</h3>
+                </div>
+                <div class="service" onclick="showDetail('lawnTennis')">
+                    <i class='fas fa-basketball-ball'></i>
+                    <h3>Basketball</h3>
+                </div>
+                <div class="service" onclick="showDetail('volleyball')">
+                    <i class="fas fa-volleyball"></i>
+                    <h3>VolleyBall</h3>
+                </div>
+                <div class="service" onclick="showDetail('steam')">
+                    <i class="fas fa-hot-tub"></i>
+                    <h3>Steam</h3>
+                </div>
+                <div class="service" onclick="showDetail('swimmingPool')">
+                    <i class="fas fa-swimmer"></i>
+                    <h3>Swimming Pool</h3>
+                </div>
+                <div class="service" onclick="showDetail('tableTennis')">
+                    <i class="fas fa-table-tennis"></i>
+                    <h3>Table Tennis</h3>
+                </div>
+                <div class="service" onclick="showDetail('tableTennisRacquetClub')">
+                    <i class="fas fa-table-tennis"></i>
+                    <h3>Table Tennis - Racquet Club</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<div class="seat-selector" id="seatSelector">
+    <div class="seat-selector-content">
+        <button class="back-btn" onclick="closeSeatSelector()">
+            <i class="fas fa-arrow-left"></i> Back
+        </button>
+        <h2>Select No. of Seats</h2>
+        <div class="seats-options">
+            <div class="members">
+                <h4>No. Of Members</h4>
+                <div class="options">
+                    <div class="seat-option" data-value="1">1</div>
+                    <div class="seat-option" data-value="2">2</div>
+                    <div class="seat-option" data-value="3">3</div>
+                    <div class="seat-option" data-value="4">4</div>
+                </div>
+            </div>
+            <div class="guests">
+                <h4>No. Of Guests</h4>
+                <div class="options">
+                    <div class="seat-option" data-value="0">0</div>
+                    <div class="seat-option" data-value="1">1</div>
+                    <div class="seat-option" data-value="2">2</div>
+                </div>
+            </div>
+        </div>
+        <p class="total-seats">Total Seats: <span id="totalSeats">1</span></p>
+        <button class="confirm-seats-btn" onclick="confirmSeats()">Confirm Seats</button>
+    </div>
+</div>
+
+<div class="date-selector" id="dateSelector">
+    <div class="date-selector-content">
+        <button class="back-btn" onclick="closeDateSelector()">
+            <i class="fas fa-arrow-left"></i> Back
+        </button>
+        <h2>Select Date</h2>
+        <div class="options">
+            <div class="date-option" data-value="today">
+                <input type="radio" name="date" id="date-today" checked>
+                <label for="date-today">
+                    <strong>Today</strong>
+                    <p class="date-detail"></p>
+                </label>
+            </div>
+            <div class="date-option" data-value="tomorrow">
+                <input type="radio" name="date" id="date-tomorrow">
+                <label for="date-tomorrow">
+                    <strong>Tomorrow</strong>
+                    <p class="date-detail"></p>
+                </label>
+            </div>
+        </div>
+        <button class="confirm-seats-btn" onclick="confirmDate()">Confirm Date</button>
+    </div>
+</div>
+
+<div class="field-selector" id="fieldSelector">
+    <div class="field-selector-content">
+        <button class="back-btn" onclick="closeFieldSelector()">
+            <i class="fas fa-arrow-left"></i> Back
+        </button>
+        <h2>Select Field</h2>
+        <div class="options">
+            <div class="field-option" data-value="field1">
+                <input type="radio" name="field" id="field1">
+                <label for="field1">
+                    <strong>Field 1</strong>
+                </label>
+            </div>
+            <div class="field-option" data-value="field2">
+                <input type="radio" name="field" id="field2">
+                <label for="field2">
+                    <strong>Field 2</strong>
+                </label>
+            </div>
+            <div class="field-option" data-value="field3">
+                <input type="radio" name="field" id="field3">
+                <label for="field3">
+                    <strong>Field 3</strong>
+                </label>
+            </div>
+        </div>
+        <button class="confirm-field-btn" onclick="confirmField()">Confirm Field</button>
+    </div>
+</div>
+
+<div class="timing-selector" id="timingSelector">
+    <div class="timing-selector-content">
+        <button class="back-btn" onclick="closeTimingSelector()">
+            <i class="fas fa-arrow-left"></i> Back
+        </button>
+        <h2>Select Timing</h2>
+        <div class="options" id="timing-options">
+            <!-- Timing options will be dynamically populated here -->
+        </div>
+        <button class="confirm-timing-btn" onclick="confirmTiming()">Confirm Timing</button>
+    </div>
+</div>
+
+<div class="booking-notification" id="bookingNotification" style="display: none;">
+    <h3>Booking Confirmed</h3>
+    <p id="bookingDetails"></p>
+    <button class="close-notification-btn" onclick="closeNotification()">Close</button>
+</div>
+
+<script>
+    const initialContent = document.getElementById('main-content').innerHTML;
+
+    function getRandomNumber() {
+        return Math.floor(Math.random() * 9000) + 1000; // Generate a random 4-digit number
+    }
+
+    async function showDetail(sport) {
+        console.log(`Sport clicked: ${sport}`);
+        const mainContent = document.getElementById('main-content');
+
+        const sportDetails = {
+            badminton: {
+                title: "Badminton - Racquet Club",
+                memberFee: "₹300",
+                guestFee: "₹500",
+                timings: "06:30am - 01:00pm and 03:00pm - 10:00pm",
+                court: "Any Court",
+                timingAvailability: "Slot Not Available",
+                cost: "₹300.00"
+            },
+            football: {
+                title: "Football",
+                memberFee: "₹200",
+                guestFee: "₹400",
+                timings: "06:00am - 08:00pm",
+                court: "Any Field",
+                timingAvailability: "Available",
+                cost: "₹200.00"
+            },
+            // Add more sport details here...
+        };
+
+        const details = sportDetails[sport];
+        console.log(`Details for ${sport}:`, details);
+
+        const username = sessionStorage.getItem('username');
+        if (username) {
+            details.member = `${username} (${getRandomNumber()})`;
+        } else {
+            details.member = "Guest";
+        }
+
+        if (details) {
+            mainContent.innerHTML = `
+                <div class="detail-header">
+                    <button class="back-btn" onclick="goBack()">
+                        <i class="fas fa-arrow-left"></i> Back
+                    </button>
+                    <h2>${details.title}</h2>
+                    <p class="fee">Member: ${details.memberFee} | Guest: ${details.guestFee}</p>
+                </div>
+                <div class="detail-body">
+                    <div class="detail-info">
+                        <p>Timings: ${details.timings}</p>
+                        <p class="member-info">Member: ${details.member}</p>
+                    </div>
+                    <div class="detail-services">
+                        <div class="detail-service" onclick="openDateSelector()">
+                            <h4>Date</h4>
+                            <p id="selected-date">Today</p>
+                        </div>
+                        <div class="detail-service" onclick="openFieldSelector()">
+                            <h4>Field</h4>
+                            <p id="selected-field">Any Field</p>
+                        </div>
+                        <div class="detail-service" onclick="openTimingSelector()">
+                            <h4>Timing</h4>
+                            <p id="selected-timing">Available</p>
+                        </div>
+                        <div class="detail-service" onclick="openSeatSelector()">
+                            <h4>No. of Seats</h4>
+                            <p id="selected-seats">1 Members = 1 Seats</p>
+                        </div>
+                        <div class="detail-cost">
+                            <p id="total-cost">Total Cost: ${details.cost}</p>
+                            <button class="confirm-btn" onclick="confirmBooking()">Proceed to Confirm</button>
+                            <div id="error-message" style="color: red; margin-top: 10px;"></div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        } else {
+            console.error(`No details found for sport: ${sport}`);
+        }
+    }
+
+    function goBack() {
+        const mainContent = document.getElementById('main-content');
+        mainContent.innerHTML = initialContent;
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        const username = sessionStorage.getItem('username');
+        if (username) {
+            const loginLink = document.getElementById('login-link');
+            loginLink.innerText = `Welcome Back, ${username}`;
+            loginLink.href = '#'; // Remove link functionality
+        }
+    });
+
+    // Seat selector functionality
+    function openSeatSelector() {
+        document.getElementById('seatSelector').style.display = 'block';
+    }
+
+    function closeSeatSelector() {
+        document.getElementById('seatSelector').style.display = 'none';
+    }
+
+    function confirmSeats() {
+        const selectedMembers = document.querySelector('.members .seat-option.selected').innerText;
+        const selectedGuests = document.querySelector('.guests .seat-option.selected').innerText;
+        const totalSeats = parseInt(selectedMembers) + parseInt(selectedGuests);
+
+        document.getElementById('selected-seats').innerText = `${selectedMembers} Members = ${totalSeats} Seats`;
+
+        // Update total cost
+        const memberCost = 200;
+        const guestCost = 400;
+        const totalCost = memberCost + guestCost * parseInt(selectedGuests);
+
+        document.getElementById('total-cost').innerText = `Total Cost: ₹${totalCost}.00`;
+        // Storing the values in sessionStorage to be used during form submission
+    sessionStorage.setItem('totalCost', totalCost);
+    sessionStorage.setItem('numberOfSeats', totalSeats);
+
+        closeSeatSelector();
+    }
+
+    document.querySelectorAll('.seat-option').forEach(option => {
+        option.addEventListener('click', function() {
+            const parent = this.parentElement;
+            parent.querySelectorAll('.seat-option').forEach(sibling => sibling.classList.remove('selected'));
+            this.classList.add('selected');
+            updateTotalSeatsAndCost();
+        });
+    });
+
+    function updateTotalSeatsAndCost() {
+            const selectedMembers = document.querySelector('.members .seat-option.selected')?.dataset.value || 0;
+            const selectedGuests = document.querySelector('.guests .seat-option.selected')?.dataset.value || 0;
+            const totalSeats = parseInt(selectedMembers) + parseInt(selectedGuests);
+            document.getElementById('totalSeats').innerText = totalSeats;
+
+            const memberCost = 200;
+            const guestCost = 400;
+            const totalCost = (memberCost * selectedMembers) + (guestCost * selectedGuests);
+
+            document.getElementById('totalCost').value = totalCost;
+            document.getElementById('numberOfSeats').value = totalSeats;
+        }
+
+    // Date selector functionality
+    function openDateSelector() {
+        document.getElementById('dateSelector').style.display = 'block';
+        updateDateOptions();
+    }
+
+    function closeDateSelector() {
+        document.getElementById('dateSelector').style.display = 'none';
+    }
+
+    function updateDateOptions() {
+        const today = new Date();
+        const tomorrow = new Date(today);
+        tomorrow.setDate(tomorrow.getDate() + 1);
+
+        document.querySelector('#date-today + label .date-detail').innerText = formatDate(today);
+        document.querySelector('#date-tomorrow + label .date-detail').innerText = formatDate(tomorrow);
+    }
+
+    function confirmDate() {
+        const selectedDateOption = document.querySelector('input[name="date"]:checked').id;
+        let formattedDate;
+        if (selectedDateOption === 'date-today') {
+            formattedDate = 'Today';
+        } else {
+            const tomorrow = new Date();
+            tomorrow.setDate(tomorrow.getDate() + 1);
+            formattedDate = formatDate(tomorrow);
+        }
+        
+        document.getElementById('selected-date').innerText = formattedDate;
+        closeDateSelector();
+
+        // Fetch booked slots after confirming the date
+        const selectedField = document.getElementById('selected-field').innerText;
+        fetchBookedSlots(selectedField, formattedDate);
+    }
+
+    // Field selector functionality
+    function openFieldSelector() {
+        document.getElementById('fieldSelector').style.display = 'block';
+    }
+
+    function closeFieldSelector() {
+        document.getElementById('fieldSelector').style.display = 'none';
+    }
+
+    function confirmField() {
+        const selectedField = document.querySelector('input[name="field"]:checked').nextElementSibling.innerText;
+        document.getElementById('selected-field').innerText = selectedField;
+        closeFieldSelector();
+
+        // Fetch booked slots after confirming the field
+        const selectedDate = document.getElementById('selected-date').innerText;
+        fetchBookedSlots(selectedField, selectedDate);
+    }
+
+    // Timing selector functionality
+    function openTimingSelector() {
+        document.getElementById('timingSelector').style.display = 'block';
+        populateTimingOptions();
+    }
+
+    function closeTimingSelector() {
+        document.getElementById('timingSelector').style.display = 'none';
+    }
+
+    async function populateTimingOptions() {
+    const timingOptions = document.getElementById('timing-options');
+    timingOptions.innerHTML = ''; // Clear previous options
+
+    const now = new Date();
+    const currentTime = now.getHours() * 100 + now.getMinutes();
+    const timings = [
+        { time: '06:00 AM - 07:00 AM', fee: '₹50 Member, ₹200 Guest', start: 600 },
+        { time: '07:00 AM - 08:00 AM', fee: '₹50 Member, ₹200 Guest', start: 700 },
+        { time: '08:00 AM - 09:00 AM', fee: '₹50 Member, ₹200 Guest', start: 800 },
+        { time: '09:00 AM - 10:00 AM', fee: '₹50 Member, ₹200 Guest', start: 900 },
+        { time: '10:00 AM - 11:00 AM', fee: '₹50 Member, ₹200 Guest', start: 1000 },
+        { time: '11:00 AM - 12:00 PM', fee: '₹50 Member, ₹200 Guest', start: 1100 },
+        { time: '12:00 PM - 01:00 PM', fee: '₹50 Member, ₹200 Guest', start: 1200 },
+        { time: '03:00 PM - 04:00 PM', fee: '₹50 Member, ₹200 Guest', start: 1500 },
+        { time: '04:00 PM - 05:00 PM', fee: '₹50 Member, ₹200 Guest', start: 1600 },
+        { time: '05:00 PM - 06:00 PM', fee: '₹50 Member, ₹200 Guest', start: 1700 },
+        { time: '06:00 PM - 07:00 PM', fee: '₹50 Member, ₹200 Guest', start: 1800 },
+        { time: '07:00 PM - 08:00 PM', fee: '₹150 Member, ₹350 Guest', start: 1900 },
+        { time: '08:00 PM - 09:00 PM', fee: '₹150 Member, ₹350 Guest', start: 2000 },
+        { time: '09:00 PM - 10:00 PM', fee: '₹150 Member, ₹350 Guest', start: 2100 }
+    ];
+
+    const selectedField = document.getElementById('selected-field').innerText;
+    const selectedDate = document.getElementById('selected-date').innerText;
+    console.log(`Fetching booked slots for field: ${selectedField}, date: ${selectedDate}`);
+
+    try {
+        const response = await fetch(`/booked-slots?field=${selectedField}&date=${selectedDate}`);
+        const bookedSlots = await response.json();
+        console.log('Booked slots:', bookedSlots);
+        const bookedTimings = bookedSlots.map(slot => slot.timing.split(' ')[0]); // Extract just the timing part
+
+        timings.forEach(({ time, fee, start }) => {
+            const option = document.createElement('div');
+            option.classList.add('timing-option');
+
+            // Check if the timing has passed
+            if (selectedDate === 'Today' && start <= currentTime) {
+                // Timing has passed, do not show this option
+                return;
+            }
+
+            option.innerHTML = `
+                <input type="radio" name="timing" id="${time}">
+                <label for="${time}">
+                    <strong>${time}</strong>
+                    <p class="timing-fee">${fee}</p>
+                    <p class="booking-status"></p> <!-- Add this line -->
+                </label>
+            `;
+            const timingOnly = time.split(' ')[0]; // Extract just the timing part
+            if (bookedTimings.includes(timingOnly)) {
+                option.querySelector('input').disabled = true; // Disable the input
+                option.querySelector('.booking-status').innerText = "Already Booked"; // Update status
+            }
+            timingOptions.appendChild(option);
+        });
+
+        if (timingOptions.innerHTML === '') {
+            timingOptions.innerHTML = '<p>No available slots for the selected date and field.</p>';
+        }
+    } catch (error) {
+        console.error('Error fetching booked slots:', error);
+    }
+}
+
+
+    async function fetchBookedSlots(field, date) {
+        try {
+            const response = await fetch(`/booked-slots?field=${field}&date=${date}`);
+            const bookedSlots = await response.json();
+            console.log('Fetched booked slots:', bookedSlots);  // Debugging line
+
+            const bookedTimings = bookedSlots.map(slot => slot.timing.split(' ')[0]); // Extract just the timing part
+            const timingOptions = document.querySelectorAll('.timing-option');
+
+            timingOptions.forEach(option => {
+                const timingLabel = option.querySelector('label strong').innerText.split(' ')[0].trim();
+                console.log(`Checking timing: ${timingLabel}`); // Add this line for debugging
+                if (bookedTimings.includes(timingLabel)) {
+                    option.classList.add('booked'); // Add a class to indicate the slot is booked
+                    option.querySelector('input').disabled = true; // Disable the input
+                    option.querySelector('.booking-status').innerText = "Already Booked"; // Update status
+                } else {
+                    option.classList.remove('booked');
+                    option.querySelector('input').disabled = false;
+                    option.querySelector('.booking-status').innerText = ""; // Clear status
+                }
+            });
+        } catch (error) {
+            console.error('Error fetching booked slots:', error);
+        }
+    }
+
+    function confirmTiming() {
+        const selectedTiming = document.querySelector('input[name="timing"]:checked').nextElementSibling.innerText;
+        document.getElementById('selected-timing').innerText = selectedTiming;
+        closeTimingSelector();
+    }
+
+    function showBookingNotification(details) {
+        const bookingNotification = document.getElementById('bookingNotification');
+        document.getElementById('bookingDetails').innerText = details;
+        bookingNotification.style.display = 'block';
+    }
+
+    function closeNotification() {
+        document.getElementById('bookingNotification').style.display = 'none';
+    }
+
+    function formatDate(date) {
+        const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+        return date.toLocaleDateString('en-US', options);
+    }
+
+    function getDayName(dateStr, locale) {
+        var date = new Date(dateStr);
+        return date.toLocaleDateString(locale, { weekday: 'long' });        
+    }
+
+    // Function to validate all fields
+function validateBookingFields() {
+    const selectedDate = document.getElementById('selected-date').innerText;
+    const selectedField = document.getElementById('selected-field').innerText;
+    const selectedTiming = document.getElementById('selected-timing').innerText;
+    const selectedSeats = sessionStorage.getItem('numberOfSeats'); // Get seats from sessionStorage
+
+    let errorMessage = '';
+    if (selectedDate === 'Select Date' || !selectedDate) {
+        errorMessage += 'Please select a date. ';
+    }
+    if (selectedField === 'Any Field' || !selectedField) {
+        errorMessage += 'Please select a field. ';
+    }
+    if (selectedTiming === 'Available' || !selectedTiming) {
+        errorMessage += 'Please select a timing. ';
+    }
+    if (!selectedSeats || Number(selectedSeats) === 0) {  // Ensure seats are checked and not 0
+        errorMessage += 'Please select the number of seats. ';
+    }
+
+    if (errorMessage) {
+        // Display error message
+        document.getElementById('error-message').innerText = errorMessage;
+        document.getElementById('error-message').style.color = 'red';
+        return false; // Prevent submission
+    } else {
+        document.getElementById('error-message').innerText = ''; // Clear error message
+        document.getElementById('error-message').style.display = 'none';
+        return true; // Allow submission
+    }
+}
+
+
+    async function confirmBooking() {
+
+        if (!validateBookingFields()) {
+        return; // Prevent form submission if validation fails
+    }
+
+    const selectedDate = document.getElementById('selected-date').innerText;
+    const selectedField = document.getElementById('selected-field').innerText;
+    const selectedTiming = document.getElementById('selected-timing').innerText;
+    const numberOfSeats = sessionStorage.getItem('numberOfSeats');
+    const totalCost = sessionStorage.getItem('totalCost');
+
+    const bookingData = {
+        field: selectedField,
+        date: selectedDate,
+        timing: selectedTiming,
+        numberOfSeats: Number(numberOfSeats),  // Ensure this is a number
+        totalCost: Number(totalCost)           // Ensure this is a number
+    };
+
+    try {
+        const response = await fetch('/book', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(bookingData)
+        });
+
+        if (response.ok) {
+            showBookingNotification(`Booking confirmed for ${selectedField} on ${selectedDate} at ${selectedTiming}`);
+        } else {
+            const message = await response.text();
+            alert(`Error: ${message}`);
+        }
+    } catch (error) {
+        console.error('Error booking slot:', error);
+        alert('An error occurred while booking the slot. Please try again.');
+    }
+}
+
+</script>
+
+</script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

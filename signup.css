@@ -1,0 +1,180 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+h2 {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.form-container {
+  width: 300px;
+  margin: 0 auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #fff; /* Added background color */
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 8px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+}
+
+.submit-btn {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  background-color: #472dbb;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 20px; /* Increased margin-top for more space */
+}
+
+.submit-btn:hover {
+  background-color: #4565a0;
+}
+
+p {
+  margin-top: 15px;
+}
+
+#error-message {
+  color: red;
+  display: none;
+  margin-top: 5px;
+}
+
+#success-message { /* Added success message styles */
+  color: green;
+  display: none;
+  margin-top: 5px;
+}
+
+#forgot-password-link {
+  display: block;
+  margin-top: 10px;
+  color: #007bff;
+  text-decoration: none;
+}
+
+#forgot-password-link:hover {
+  text-decoration: underline;
+}
+
+.password-container {
+  align-items: center;
+  position: relative;
+}
+
+.password-container input {
+  flex: 1;
+}
+
+.eye-icon {
+  position: absolute;
+  right: 10px;
+  bottom: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  font-size: 20px;
+  color: #5c67f2;
+}
+
+.eye-icon:hover {
+  color: #333;
+}
+
+/* Styles for the Terms and Conditions checkbox */
+.terms-container {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.terms-container input[type="checkbox"] {
+  margin-right: 10px;
+}
+
+.terms-container label {
+  font-weight: normal;
+  display: flex;
+  align-items: center;
+}
+
+.terms-container a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+.terms-container a:hover {
+  text-decoration: underline;
+}
+
+.captcha-container {
+  display: flex;
+  align-items: center;
+  border: 2px solid #ccc;
+  padding: 10px;
+  background-color: #fff;
+  margin-bottom: 10px; /* Added margin-bottom for space */
+}
+
+.checkbox {
+  width: 20px;
+  height: 20px;
+  border: 2px solid #000;
+  cursor: pointer;
+  margin-right: 10px;
+}
+
+.captcha-text {
+  font-family: Arial, sans-serif;
+  margin-left: 10px; /* Added margin-left for space */
+  margin-right: 10px;
+}
+
+.captcha-icon svg {
+  width: 24px;
+  height: 24px;
+}
+
+/* Styles for the reCAPTCHA logo */
+.recaptcha-logo {
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+  font-family: Arial, sans-serif;
+  font-size: 12px;
+  color: #555;
+}
+
+.recaptcha-logo svg {
+  width: 24px; /* Adjusted size for the logo */
+  margin-right: 5px;
+}

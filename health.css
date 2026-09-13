@@ -1,0 +1,159 @@
+
+.container {
+    width: 50%;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    text-align: center;
+}
+
+.input-container {
+    margin: 15px 0;
+}
+
+input[type="number"] {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 90%;
+    font-size: 16px;
+}
+
+.input-container label {
+    display: block;
+    font-size: 18px;
+    margin-bottom: 5px;
+}
+
+.input-container input {
+    width: 80%;
+    padding: 10px;
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+
+/* Button styling */
+button {
+    padding: 10px 20px;
+    background-color: #ff6b3b;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #e65a2d;
+}
+#health-result {
+    margin-top: 20px;
+}
+
+#health-bodyfat {
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+}
+
+.visual-section {
+    margin: 20px 0;
+}
+
+.visual-section img {
+    max-width: 100%;
+    height: auto;
+}
+
+.marker {
+    width: 15px;
+    height: 15px;
+    background-color: #ff6b3b;
+    position: absolute;
+    top: -5px;
+    border-radius: 50%;
+}
+
+p {
+    margin-top: 10px;
+    font-size: 16px;
+}
+
+/* Error handling for input validation */
+input[type="number"]:invalid {
+    border: 2px solid red;
+}
+
+/* Body Fat Bar and Category Styling */
+.bodyfat-bar-container {
+    width: 100%;
+    text-align: center;
+    margin-top: 20px;
+}
+
+.bodyfat-bar {
+    position: relative;
+    width: 80%;
+    height: 6px;
+    margin: 0 auto;
+    background-color: #ddd;
+    border-radius: 5px;
+}
+
+.bodyfat-marker {
+    position: absolute;
+    top: -7px;
+    left: 0;
+    width: 14px;
+    height: 14px;
+    background-color: orange;
+    border-radius: 50%;
+    transform: translateX(-50%);
+}
+
+.bodyfat-categories {
+    display: flex;
+    justify-content: space-between;
+    width: 80%;
+    margin: 10px auto 0;
+}
+
+.bodyfat-ranges {
+    display: flex;
+    justify-content: space-between;
+    width: 80%;
+    margin: 10px auto;
+}
+
+.range-label, .category-label {
+    text-align: center;
+    font-weight: bold;
+    font-size: 12px;
+    color: #555;
+}
+
+/* Demarcation lines for the category separator */
+.bodyfat-bar::before,
+.bodyfat-bar::after,
+.bodyfat-bar .middle-separator {
+    content: '';
+    position: absolute;
+    width: 2px;
+    height: 18px;
+    background-color: #000;
+    top: -6px;
+}
+
+.bodyfat-bar::before {
+    left: 16%;
+}
+
+.bodyfat-bar::after {
+    left: 56%;
+}
+
+.bodyfat-bar .middle-separator {
+    left: 80%;
+}

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OTP Verification Page</title>
+    <link rel="stylesheet" href="/otp.css">
+</head>
+<body>
+    <div class="container">
+        <h2>OTP Verification</h2>
+
+<!-- OTP Verification Page -->
+<form id="otp-form">
+    <label for="otp">Enter OTP:</label>
+    <input type="text" id="otp" name="otp" required>
+    <button type="submit">Verify OTP</button>
+    <div id="otp-message"></div>
+</form>
+</div>
+</body>
+
+<script>
+document.getElementById('otp-form').addEventListener('submit', async function(event) {
+    event.preventDefault();
+    const otp = document.getElementById('otp').value;
+    const email = sessionStorage.getItem('email'); // Assuming email is stored in sessionStorage
+    console.log('Email from session storage:', email);  // Debugging log
+
+    try {
+        const response = await fetch('/verify-otp', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email, otp })
+        });
+
+        if (response.ok) {
+            window.location.href = '/resetpassword.html';
+        } else {
+            const message = await response.text();
+            document.getElementById('otp-message').textContent = message;
+        }
+    } catch (error) {
+        console.error('Error verifying OTP:', error);
+        document.getElementById('otp-message').textContent = 'An error occurred. Please try again later.';
+    }
+});
+
+</script>

@@ -1,0 +1,971 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RedApp</title>
+    <script>
+        console.log('I do not like shashank sudhir at all.')
+        alert('Please note that this website is only meant for demonstration purposes. Please do not fill in sensitive/personal information.')
+    </script>
+
+    <script defer>
+
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log('DOM fully loaded and parsed'); // Check if script runs
+            const username = sessionStorage.getItem('username');
+            console.log('Retrieved username from sessionStorage:', username); // Check if username is retrieved
+
+            if (username) {
+                const loginElement = document.getElementById('login');
+                console.log('Login element:', loginElement); // Check if element is found
+
+                if (loginElement) {
+                    loginElement.outerHTML = `<span id="login">Welcome Back, ${username}</span>`;
+                } else {
+                    console.error('Element with id="login" not found');
+                }
+            }
+        });
+    </script>
+
+    <link rel="stylesheet" href="/Main-styles.css">
+    <link rel="stylesheet" href="/calender.css">
+    <link rel="stylesheet" href="/announcement.css">
+    <link rel="stylesheet" href="/health.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script defer src="hamburger.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.js"></script>
+
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <div class="candle-container">
+                    <div class="candle">
+                        <div class="flame"></div>
+                        <div class="spark"></div>
+                    </div>
+                </div>
+                
+                <div class="menu-icon" onclick="toggleMenu()">
+                   <div class="menu-line"></div>
+                   <div class="menu-line"></div>
+                   <div class="menu-line"></div>
+                </div>
+
+                <li class="hidden"><a href="Untitled-2.html">...</a></li> 
+
+                <li><a href="Login.html" id="login">Login</a></li>
+                <div class="login-container">
+                    <i class="fas fa-user-circle login-icon"></i>
+                </div>
+
+                <div class="dots" onclick="toggleMenu()">
+                 <div class="dot"></div>
+                 <div class="dot"></div>
+                 <div class="dot"></div>
+                 </div> 
+            </ul> 
+        </nav>
+    </header>
+
+    <div id="menu" class="menu">
+        <div class="menu-header">
+            <label for="uploadProfilePic" style="cursor: pointer;">
+                <img id="profile-pic" src="path/to/default-profile-pic.jpg" alt="Profile Picture" class="profile-circle">
+            </label>
+            <input type="file" id="uploadProfilePic" accept="image/*" style="display: none;">
+            <h2 id="user-greeting">Hi, User!</h2>
+            <p>Hope you are having fun!</p>
+        </div>
+
+        <style>
+            .profile-circle {
+                width: 100px; /* Adjust size as needed */
+                height: 100px; /* Adjust size as needed */
+                border-radius: 50%; /* Make the image a circle */
+                object-fit: cover; /* Ensure the image scales properly */
+                border: 2px solid #fff; /* Optional: add a border */
+                display: block;
+                margin: 0 auto; /* Center the image */
+            }
+        </style>
+
+        <script>
+           document.addEventListener('DOMContentLoaded', () => {
+    const username = sessionStorage.getItem('username');
+    const profilePicElement = document.getElementById('profile-pic');
+    const greetingElement = document.getElementById('user-greeting');
+
+    if (username) {
+        greetingElement.textContent = `Hi, ${username}!`;
+
+        // Check if a custom profile picture is stored in sessionStorage
+        const profilePicPath = sessionStorage.getItem('profilePicPath');
+        if (profilePicPath) {
+            profilePicElement.src = profilePicPath;
+        }
+    }
+
+    // Handle profile picture upload when the profile picture is clicked
+    document.getElementById('uploadProfilePic').addEventListener('change', function () {
+        const file = this.files[0];
+        if (file) {
+            const formData = new FormData();
+            formData.append('imageURL', file);
+
+            fetch('/upload-profile-pic', {
+                method: 'POST',
+                body: formData,
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.filePath) {
+                    // Update the profile picture in the session storage and DOM
+                    sessionStorage.setItem('profilePicPath', data.filePath);
+                    profilePicElement.src = data.filePath;
+                } else {
+                    alert('Error uploading profile picture.');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        }
+    });
+   
+    // Function to open a modal with a title and content
+    function openSectionModal(title, content) {
+        const modal = document.getElementById('sectionModal');
+        document.getElementById('modal-title').textContent = title;
+        document.getElementById('modal-content').innerHTML = content;
+        modal.style.display = 'block';
+    }
+
+    // Function to close the modal
+    function closeSectionModal() {
+        const modal = document.getElementById('sectionModal');
+        modal.style.display = 'none';
+    }
+
+    // Ensure cross button works
+document.querySelector('.close').addEventListener('click', closeSectionModal);
+
+    // Sidebar links to open corresponding modals
+    document.getElementById('home-link').addEventListener('click', () => {
+        openSectionModal('Home', `
+            <p>Welcome to your dashboard! Here you can find a summary of your activities and updates.</p>
+            <ul>
+                <li>Check recent bookings</li>
+                <li>View profile statistics</li>
+                <li>Access quick links to services</li>
+            </ul>
+        `);
+    });
+
+    document.getElementById('projects-link').addEventListener('click', () => {
+        openSectionModal('Projects', `
+            <p>Ongoing Projects:</p>
+            <ul>
+                <li><strong>AI Development:</strong> Automating customer support with AI.</li>
+                <li><strong>Web Application:</strong> Building a responsive e-commerce platform.</li>
+                <li><strong>Data Analytics:</strong> Insights generation from sales data.</li>
+            </ul>
+        `);
+    });
+
+    document.getElementById('contact-link').addEventListener('click', () => {
+        openSectionModal('Contact Us', `
+            <p>Reach out to our team for any queries or assistance:</p>
+            <ul>
+                <li><strong>Name:</strong> John Doe</li>
+                <li><strong>Email:</strong> johndoe@example.com</li>
+                <li><strong>Area:</strong> Greenstreet</li>
+                <li><strong>Phone:</strong> +1-234-567-890</li>
+                <li><strong>Working Hours:</strong> 9 AM - 5 PM (Mon-Fri)</li>
+            </ul>
+        `);
+    });
+
+    document.getElementById('service-link').addEventListener('click', () => {
+        openSectionModal('Service Request', `
+            <p>Submit your service requests for assistance:</p>
+            <ul>
+                <li>Account Recovery</li>
+                <li>Technical Support</li>
+                <li>General Feedback</li>
+            </ul>
+        `);
+    });
+
+    document.getElementById('faq-link').addEventListener('click', () => {
+        openSectionModal('FAQ\'s/Get Help!', `
+            <p>Frequently Asked Questions:</p>
+            <ol>
+                <li><strong>How do I reset my password?</strong> Go to Settings > Security.</li>
+                <li><strong>How can I view my bookings?</strong> Check the Profile Services section.</li>
+                <li><strong>How to contact support?</strong> Use the Contact Us section.</li>
+            </ol>
+        `);
+    });
+
+    document.getElementById('messages-link').addEventListener('click', () => {
+        openSectionModal('Messages', `
+            <p>View and manage your messages here:</p>
+            <ul>
+                <li>New messages from support</li>
+                <li>Unread notifications</li>
+                <li>System alerts</li>
+            </ul>
+        `);
+    });
+
+    document.getElementById('settings-link').addEventListener('click', () => {
+        openSectionModal('Settings', `
+            <p>Customize your preferences:</p>
+            <ul>
+                <li>Change your password</li>
+                <li>Update notification settings</li>
+                <li>Edit profile information</li>
+            </ul>
+        `);
+    });
+
+    document.getElementById('about-link').addEventListener('click', () => {
+        openSectionModal('About', `
+            <p>About Our Platform:</p>
+            <p>We aim to provide an all-in-one solution for managing activities and bookings. Our team is dedicated to offering a seamless and user-friendly experience.</p>
+        `);
+    });
+
+    // Attach event listener to the cross button
+document.querySelector('.modal-unique-close').addEventListener('click', closeSectionModal);
+
+
+    // Close modal when clicking outside or on the close button
+    window.addEventListener('click', (event) => {
+    const modal = document.getElementById('sectionModal');
+    if (event.target === modal) {
+        closeSectionModal();
+    }
+});
+
+
+});
+
+        </script>
+
+        <ul>
+            <li><a href="#" id="home-link"><i class="fas fa-home"></i> Home</a></li>
+    <li><a href="#" id="projects-link"><i class="fas fa-project-diagram"></i> Projects</a></li>
+    <li><a href="#" id="contact-link"><i class="fas fa-phone-alt"></i> Contact Us</a></li>
+    <li><a href="#" id="service-link"><i class="fas fa-tools"></i> Service Request</a></li>
+    <li><a href="#" id="faq-link"><i class="fas fa-question-circle"></i> FAQ's/Get Help!</a></li>
+    <li><a href="#" id="messages-link"><i class="fas fa-envelope"></i> Messages</a></li>
+    <li><a href="#" id="settings-link"><i class="fas fa-cogs"></i> Settings</a></li>
+    <li><a href="#" id="about-link"><i class="fas fa-info-circle"></i> About</a></li>
+            <li><a href="#" id="logout"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+        </ul>
+
+       <!-- General Modal Template -->
+<div id="sectionModal" class="modal-unique">
+    <div class="modal-unique-content">
+        <span class="modal-unique-close" onclick="closeSectionModal()">&times;</span>
+        <h2 id="modal-title"></h2>
+        <p id="modal-content" class="modal-unique-section-detail"></p>
+    </div>
+</div>
+
+    </div>
+    <div id="overlay" class="overlay" onclick="toggleMenu()"></div>
+
+    <div class="navbar">
+        <a href="#home" class="nav-item">
+            <i class="fas fa-home"></i>
+            <p>Home</p>
+        </a>
+        <a href="profile.html" class="nav-item">
+            <i class="fas fa-user"></i>
+            <p>Profile</p>
+        </a>
+        <a href="health.html" class="nav-item">
+            <i class="fas fa-users"></i>
+            <p>Health</p>
+        </a>
+        <a href="Club.html" class="nav-item">
+            <i class="fas fa-building"></i>
+            <p>Club</p>
+        </a>
+    </div>
+
+    <div class="profile-services">
+        <h1>Profile Services</h1>
+        <div class="services">
+    
+            <a href="#" class="service" id="announcement-nav" >
+                <i class="fas fa-bullhorn"></i>
+                <p>Announcement</p>
+            </a>
+            <a href="#" class="service" id="calendar-nav">
+                <i class="fas fa-calendar-alt"></i>
+                <p>Calendar</p>
+            </a>
+            
+            <a href="#" class="service" id="booking-details-nav">
+                <i class="fas fa-ticket-alt"></i>
+                <p>Booking Details</p>
+            </a>
+        </div>
+    </div>
+
+  <!-- Announcement Modal -->
+<div id="announcementModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeAnnouncementModal()">&times;</span>
+        <h2>Announcements</h2>
+
+         <!-- Announcement List Container -->
+         <div id="announcement-list"></div> <!-- This is where announcements will be loaded -->
+
+        <!-- Form fields for creating announcements -->
+        <div id="announcementContent"></div>
+        <form id="create-announcement-form" style="display: none;">
+            <input type="text" id="announcement-title" placeholder="Title" required>
+            <textarea id="announcement-description" placeholder="Description" required></textarea>
+            <input type="date" id="announcement-date" required>
+            <input type="file" id="announcement-imageURL" name="imageURL" accept="image/*" required>
+            <button type="submit">Create Announcement</button>
+        </form>
+    </div>
+</div>
+
+
+    <div id="calendar-modal" class="calendar-modal">
+        <div class="calendar-modal-content">
+            <span class="close-button" onclick="closeCalendarModal()">&times;</span>
+            <div class="nav-buttons">
+                <button class="nav-button" id="prev-month">&lt;</button>
+                <div id="month-year"></div>
+                <button class="nav-button" id="next-month">&gt;</button>
+            </div>
+            <div class="scroll-container" id="calendar-scroll-container">
+                <div class="calendar">
+                    <div class="header-cell" id="month-name">Aug</div>
+                    <div class="day-header">
+                        <button class="week-nav-button prev" id="prev-week">&lt;</button>
+                        <div>M</div>
+                        <div id="m-day"></div>
+                    </div>
+                    <div class="day-header">
+                        <div>T</div>
+                        <div id="t-day"></div>
+                    </div>
+                    <div class="day-header">
+                        <div>W</div>
+                        <div id="w-day"></div>
+                    </div>
+                    <div class="day-header">
+                        <div>T</div>
+                        <div id="th-day"></div>
+                    </div>
+                    <div class="day-header">
+                        <div>F</div>
+                        <div id="f-day"></div>
+                    </div>
+                    <div class="day-header">
+                        <div>S</div>
+                        <div id="s-day"></div>
+                    </div>
+                    <div class="day-header">
+                        <div>S</div>
+                        <button class="week-nav-button next" id="next-week">&gt;</button>
+                        <div id="su-day"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Booking Details Modal -->
+    <div id="bookingDetailsModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeBookingDetailsModal()">&times;</span>
+            <h2>Your Booking Details</h2>
+            <p id="bookingCount"></p>
+            <div id="bookingDetailsContent"></div>
+        </div>
+    </div>
+
+    <!-- Logout Confirmation Modal -->
+    <div id="logoutModal" class="modal">
+        <div class="modal-content">
+            <p>Are you sure you want to log off?</p>
+            <div class="modal-buttons">
+                <button class="modal-button yes" id="confirmLogout">Yes</button>
+                <button class="modal-button no" id="cancelLogout">No</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Logout Message Modal -->
+    <div id="logoutMessageModal" class="message-modal">
+        <div class="message-modal-content">
+            <p>The user will be logged out in a few seconds</p>
+        </div>
+    </div>
+
+
+<script>
+    // Logout functionality
+    document.getElementById('logout').addEventListener('click', function() {
+        document.getElementById('logoutModal').style.display = 'block';
+    });
+
+    document.getElementById('cancelLogout').addEventListener('click', function() {
+        document.getElementById('logoutModal').style.display = 'none';
+    });
+
+    document.getElementById('confirmLogout').addEventListener('click', async function() {
+        document.getElementById('logoutModal').style.display = 'none';
+        document.getElementById('logoutMessageModal').style.display = 'block';
+        
+        // Fetch user details from session or other storage
+        const username = sessionStorage.getItem('username');
+
+        if (!username) {
+            alert('User details are missing. Please login again.');
+            sessionStorage.clear();
+            document.getElementById('logoutMessageModal').style.display = 'none';
+            const loginElement = document.getElementById('login');
+            if (loginElement) {
+                loginElement.outerHTML = `<a href="Login.html" id="login">Login</a>`;
+            }
+            return;
+        }
+
+        const response = await fetch('/logout', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ username })
+        });
+
+        if (response.ok) {
+
+            //Clear session storage
+            sessionStorage.clear();
+             // Show the message for 3 seconds before redirecting
+            setTimeout(() => {
+                window.location.href = 'Main-2.html';
+            }, 3000);
+            const loginElement = document.getElementById('login');
+            if (loginElement) {
+                loginElement.outerHTML = `<a href="Login.html" id="login">Login</a>`;
+            }
+        } else {
+            alert('Error logging out. Please try again.');
+            document.getElementById('logoutMessageModal').style.display = 'none';
+        }
+    });
+
+    // Debugging statements to check session storage values
+    console.log("Stored username:", sessionStorage.getItem('username'));
+
+    // Calendar functionality
+    function closeCalendarModal() {
+        document.getElementById('calendar-modal').style.display = 'none';
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        highlightCurrentDay(); // Call function to highlight the current day
+        loadNotes(); // Load saved notes on page load
+        checkNotifications(); // Check for notifications on page load
+        updateCalendarHeader(new Date()); // Initial calendar header update
+        populateCalendar(); // Call populateCalendar on page load
+        setInterval(checkForDateChange, 60000); // Check for date change every minute
+        setInterval(checkForReminders, 60000); // Check for reminders every minute
+    });
+
+    function fetchReminders() {
+    fetch('/fetch-reminders')
+        .then(response => response.json())
+        .then(reminders => {
+            reminders.forEach(reminder => {
+                alert(`Reminder: ${reminder.note}`);
+            });
+        })
+        .catch(error => {
+            console.error('Error fetching reminders:', error);
+        });
+}
+
+    // Highlight the current day
+    function highlightCurrentDay() {
+        const today = new Date();
+        const currentDay = today.getDate();
+        const currentMonth = today.getMonth();
+        const currentYear = today.getFullYear();
+
+        document.querySelectorAll('.day-cell').forEach(dayCell => {
+            const cellDate = new Date(dayCell.querySelector('textarea').dataset.date);
+            if (
+                cellDate.getDate() === currentDay &&
+                cellDate.getMonth() === currentMonth &&
+                cellDate.getFullYear() === currentYear
+            ) {
+                dayCell.classList.add('highlight');
+            } else {
+                dayCell.classList.remove('highlight'); // Remove highlight if not the current date
+            }
+        });
+    }
+
+    // Check if the date has changed and update the highlight
+function checkForDateChange() {
+    const today = new Date();
+    const currentDay = today.getDate();
+    const currentMonth = today.getMonth();
+    const currentYear = today.getFullYear();
+    const highlightedCell = document.querySelector('.day-cell.highlight');
+    
+    if (highlightedCell) {
+        const highlightedDate = new Date(highlightedCell.querySelector('textarea').dataset.date);
+        if (
+            highlightedDate.getDate() !== currentDay ||
+            highlightedDate.getMonth() !== currentMonth ||
+            highlightedDate.getFullYear() !== currentYear
+        ) {
+            populateCalendar(); // Repopulate calendar to update the current day highlight
+        }
+    }
+}
+
+    // Save notes to the server
+    function saveNote() {
+        const textarea = this;
+        const key = textarea.dataset.key;
+        const note = textarea.value;
+
+        fetch('/save-note', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ key, note })
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log('Note saved:', data);
+        })
+        .catch(error => {
+            console.error('Error saving note:', error);
+        });
+    }
+
+    function clearNotes() {
+    document.querySelectorAll('.day-cell textarea').forEach(textarea => {
+        textarea.value = ''; // Clear all textareas
+    });
+}
+
+function loadNotes() {
+    fetch('/load-notes')
+    .then(response => response.json())
+    .then(notes => {
+        clearNotes(); // Clear notes before loading new ones
+        document.querySelectorAll('.day-cell textarea').forEach(textarea => {
+            const key = textarea.dataset.key;
+            const note = notes.find(n => n.key === key);
+            if (note) {
+                textarea.value = note.note;
+            }
+        });
+    })
+    .catch(error => {
+        console.error('Error loading notes:', error);
+    });
+}
+
+
+    // Check for notifications
+    function checkNotifications() {
+        const now = new Date();
+        const notes = JSON.parse(localStorage.getItem('calendarNotes')) || {};
+
+        Object.keys(notes).forEach(key => {
+            const [year, month, day, hour] = key.split('-').map(Number);
+            if (year === now.getFullYear() && month === now.getMonth() && day === now.getDate() && hour === now.getHours()) {
+                alert(`Reminder: ${notes[key]}`);
+            }
+        });
+    }
+
+    // Modified populateCalendar function to include textareas
+function populateCalendar() {
+    const calendar = document.querySelector('.calendar');
+    const startTime = 0; // Starting hour
+    const endTime = 23; // Ending hour
+    const today = new Date();
+    const currentMonth = today.getMonth();
+    const currentYear = today.getFullYear();
+
+    // Remove previous time slots and cells
+    while (calendar.children.length > 8) { // Adjusted for new grid structure
+        calendar.removeChild(calendar.lastChild);
+    }
+
+    for (let hour = startTime; hour <= endTime; hour++) {
+        const timeSlot = document.createElement('div');
+        timeSlot.className = 'time-slot';
+        timeSlot.textContent = `${hour}:00`;
+        calendar.appendChild(timeSlot);
+
+        for (let day = 0; day < 7; day++) {
+            const dayCell = document.createElement('div');
+            dayCell.className = 'day-cell';
+            const cellDate = new Date(currentYear, currentMonth, today.getDate() - today.getDay() + day + 1);
+            const key = `${currentYear}-${currentMonth + 1}-${cellDate.getDate()}-${hour}`; // Adjusted key format
+            const textarea = document.createElement('textarea');
+            textarea.dataset.key = key;
+            textarea.dataset.date = cellDate.toISOString();
+            textarea.addEventListener('change', saveNote);
+            textarea.value = ''; // Ensure text area is cleared before loading new notes
+            dayCell.appendChild(textarea);
+
+            calendar.appendChild(dayCell);
+        }
+    }
+
+    highlightCurrentDay(); // Highlight the current day after populating the calendar
+    loadNotes(); // Load notes for the current week
+}
+
+
+    function updateCalendarHeader(date) {
+        const days = ['M', 'T', 'W', 'T', 'F', 'S', 'S'];
+        const currentMonth = date.getMonth();
+        const currentYear = date.getFullYear();
+        const firstDayOfMonth = new Date(currentYear, currentMonth, 1);
+        const lastDayOfMonth = new Date(currentYear, currentMonth + 1, 0);
+        const daysInMonth = lastDayOfMonth.getDate();
+
+        document.getElementById('month-year').textContent = `${firstDayOfMonth.toLocaleString('default', { month: 'long' })} ${currentYear}`;
+        document.getElementById('month-name').textContent = firstDayOfMonth.toLocaleString('default', { month: 'short' });
+
+        const headerCells = document.querySelectorAll('.day-header div:last-child');
+        let currentDay = date.getDate() - date.getDay() + 1;
+
+        headerCells.forEach((cell, index) => {
+            if (currentDay > 0 && currentDay <= daysInMonth) {
+                cell.textContent = currentDay;
+            } else {
+                cell.textContent = '';
+            }
+            currentDay++;
+        });
+    }
+
+    let currentDate = new Date();
+
+    document.getElementById('prev-month').addEventListener('click', () => {
+        currentDate.setMonth(currentDate.getMonth() - 1);
+        updateCalendarHeader(currentDate);
+        populateCalendar(); // Re-populate the calendar when navigating months
+    });
+
+    document.getElementById('next-month').addEventListener('click', () => {
+        currentDate.setMonth(currentDate.getMonth() + 1);
+        updateCalendarHeader(currentDate);
+        populateCalendar(); // Re-populate the calendar when navigating months
+    });
+
+    document.getElementById('prev-week').addEventListener('click', () => {
+        currentDate.setDate(currentDate.getDate() - 7);
+        updateCalendarHeader(currentDate);
+        populateCalendar(); // Re-populate the calendar when navigating months
+    });
+
+    document.getElementById('next-week').addEventListener('click', () => {
+        currentDate.setDate(currentDate.getDate() + 7);
+        updateCalendarHeader(currentDate);
+        populateCalendar(); // Re-populate the calendar when navigating months
+
+    });
+
+    const calendarScrollContainer = document.getElementById('calendar-scroll-container');
+    let touchstartX = 0;
+    let touchendX = 0;
+
+    function handleGesture() {
+        if (touchendX < touchstartX) {
+            currentDate.setDate(currentDate.getDate() + 7);
+            updateCalendarHeader(currentDate);
+        }
+        if (touchendX > touchstartX) {
+            currentDate.setDate(currentDate.getDate() - 7);
+            updateCalendarHeader(currentDate);
+        }
+    }
+
+    calendarScrollContainer.addEventListener('touchstart', e => {
+        touchstartX = e.changedTouches[0].screenX;
+    });
+
+    calendarScrollContainer.addEventListener('touchend', e => {
+        touchendX = e.changedTouches[0].screenX;
+        handleGesture();
+    });
+
+    // Initialize calendar header on page load
+    updateCalendarHeader(currentDate);
+
+    // Show calendar modal and populate calendar when calendar-nav is clicked
+    document.getElementById('calendar-nav').addEventListener('click', function() {
+        document.getElementById('calendar-modal').style.display = 'block';
+        updateCalendarHeader(currentDate); // Update calendar header when the modal is opened
+        populateCalendar();
+    });
+
+    // Example of dynamically calculating fee based on user type or booking details
+const getFee = (booking) => {
+    // Define fees for members and guests
+    const memberFee = 50;
+    const guestFee = 200;
+    // Determine fee based on user type or other booking criteria
+    // Here assuming booking has a 'userType' property that could be 'member' or 'guest'
+    return booking.userType === 'member' ? memberFee : guestFee;
+};
+
+    // Booking Details functionality
+    document.getElementById('booking-details-nav').addEventListener('click', async function() {
+        const username = sessionStorage.getItem('username');
+        const bookingDetailsModal = document.getElementById('bookingDetailsModal');
+        const bookingDetailsContent = document.getElementById('bookingDetailsContent');
+        const bookingCountElement = document.getElementById('bookingCount');
+
+        if (!username) {
+            bookingDetailsContent.innerHTML = '<p>Please log in to view your bookings.</p>';
+            bookingDetailsModal.style.display = 'block';
+            return;
+        }
+
+        try {
+        const response = await fetch(`/bookings`);
+        if (response.ok) {
+            const bookings = await response.json();
+            bookingDetailsContent.innerHTML = '';
+            bookingCountElement.innerHTML = username === 'Admin' 
+                ? `Admin View: ${bookings.length} total bookings.` 
+                : `You have ${bookings.length} active bookings.`;
+
+            if (bookings.length === 0) {
+                bookingDetailsContent.innerHTML = '<p>No bookings have been made.</p>';
+            } else {
+                bookingDetailsContent.innerHTML = bookings.map(booking => {
+                    const bookingCode = generateBookingCode(); // Random booking code
+                    const qrCodeSrc = generateQRCodeSrc(bookingCode); // Generate QR code URL
+                    const timing = booking.timing.split(' ');
+                    const timeRange = `${timing[0]} ${timing[1]} - ${timing[3]} ${timing[4]}`;
+
+                    return `
+                        <div class="booking-card">
+                            <div class="booking-header">
+                                <span class="booking-code">${bookingCode}</span>
+                                <h3>${booking.field}</h3>
+                                <span class="membership-status">${booking.user === username ? 'Your Booking' : 'User: ' + booking.user}</span>
+                            </div>
+                            <div class="booking-body">
+                                <p><strong>Date:</strong> ${booking.date}</p>
+                                <p><strong>Time:</strong> ${timeRange}</p>
+                                <p><strong>Total Cost:</strong> ₹${booking.totalCost}</p>
+                                <p><strong>Players:</strong> ${booking.numberOfSeats}</p>
+                                <div class="booking-footer">
+                                <img src="${qrCodeSrc}" alt="QR Code" class="qr-code"> <!-- QR Code here -->
+                            </div>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+            }
+            bookingDetailsModal.style.display = 'block';
+        } else {
+            console.error('Error fetching bookings:', response.statusText);
+            bookingDetailsContent.innerHTML = '<p>No bookings have been made.</p>';
+            bookingDetailsModal.style.display = 'block';
+        }
+    } catch (error) {
+        console.error('Error fetching bookings:', error);
+        bookingDetailsContent.innerHTML = '<p>Error fetching bookings.</p>';
+        bookingDetailsModal.style.display = 'block';
+    }
+});
+
+    const bookingModalCloseButton = document.querySelector('#bookingDetailsModal .close');
+    bookingModalCloseButton.addEventListener('click', () => {
+        document.getElementById('bookingDetailsModal').style.display = 'none';
+    });
+
+    window.addEventListener('click', (event) => {
+        const bookingDetailsModal = document.getElementById('bookingDetailsModal');
+        if (event.target == bookingDetailsModal) {
+            bookingDetailsModal.style.display = 'none';
+        }
+    });
+
+    // Function to generate a random 4-character booking code
+    function generateBookingCode() {
+        return Math.random().toString(36).substr(2, 4).toUpperCase();
+    }
+
+    // Function to generate QR code source URL
+    function generateQRCodeSrc(text) {
+        return `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(text)}`;
+    }
+
+    // main-2.html - JavaScript Section
+
+ // Announcement functionality
+document.addEventListener('DOMContentLoaded', () => {
+    const announcementNav = document.getElementById('announcement-nav');
+    const announcementList = document.getElementById('announcement-list'); // Ensure this exists
+    const createForm = document.getElementById('create-announcement-form'); // Ensure this exists
+
+
+    if (announcementNav) {
+        announcementNav.addEventListener('click', function() {
+            console.log('Announcement section clicked!');
+            document.getElementById('announcementModal').style.display = 'block';
+            loadAnnouncements(); // Load announcements function
+
+            const username = sessionStorage.getItem('username');  // Correctly retrieve the username again
+            if (username === "Admin") {
+                document.getElementById('create-announcement-form').style.display = 'block';
+            }
+        });
+    } else {
+        console.error('Element with ID "announcement-nav" not found');
+    }
+});
+
+async function loadAnnouncements() {
+    try {
+        const response = await fetch('/announcements');
+        const announcements = await response.json();
+
+        const announcementList = document.getElementById('announcement-list');
+        if (!announcementList) {// Check if the announcement-list exists
+            console.error('Element with ID "announcement-list" not found');
+            return;
+        }
+        announcementList.innerHTML = ''; // Clear the existing list
+
+        if (announcements.length === 0) {
+            const noAnnouncementsMessage = document.createElement('p');
+            noAnnouncementsMessage.textContent = "No announcements have been made yet";
+            noAnnouncementsMessage.classList.add('no-announcements-message');
+            announcementList.appendChild(noAnnouncementsMessage);
+        } else {
+
+        announcements.forEach(announcement => {
+            const announcementItem = document.createElement('div');
+            announcementItem.classList.add('announcement-item');
+
+            announcementItem.innerHTML = `
+                <h3>${announcement.title}</h3>
+                <p>${new Date(announcement.date).toLocaleDateString()}</p>
+                ${announcement.imageURL ? `<img src="${announcement.imageURL}" alt="${announcement.title}">` : ''}
+        <div class="announcement-description-box">${announcement.description}</div>
+                ${sessionStorage.getItem('username') === "Admin" ? `<button onclick="deleteAnnouncement('${announcement._id}')">Delete</button>` : ''}
+            `;
+
+            announcementList.appendChild(announcementItem);
+        });
+        }
+    } catch (error) {
+        console.error('Error loading announcements:', error);
+    }
+}
+
+async function deleteAnnouncement(id) {
+    try {
+        const response = await fetch(`/announcement/${id}`, {
+            method: 'DELETE'
+        });
+
+        if (response.ok) {
+            alert('Announcement deleted successfully!');
+            loadAnnouncements(); // Reload announcements
+        } else {
+            alert('Error deleting announcement.');
+        }
+    } catch (error) {
+        console.error('Error:', error);
+    }
+}
+
+// Close Announcement Modal
+function closeAnnouncementModal() {
+    document.getElementById('announcementModal').style.display = 'none';
+}
+
+// Create Announcement Form Submission
+document.getElementById('create-announcement-form').addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const title = document.getElementById('announcement-title').value;
+    const description = document.getElementById('announcement-description').value;
+    const date = document.getElementById('announcement-date').value;
+    const imageFile = document.getElementById('announcement-imageURL').files[0];
+
+    const formData = new FormData();
+    formData.append('title', title);
+    formData.append('description', description);
+    formData.append('date', date);
+    formData.append('imageURL', imageFile); // Ensure this is properly appended to the formData
+
+    try {
+        const response = await fetch('/create-announcement', {
+            method: 'POST',
+            body: formData
+        });
+
+        if (response.ok) {
+            alert('Announcement created successfully!');
+            loadAnnouncements(); // Reload announcements
+        } else {
+            alert('Error creating announcement.');
+        }
+    } catch (error) {
+        console.error('Error:', error);
+    }
+
+});
+
+
+
+</script>
+
+</body>
+</html>
+
+
+
+
+
+
+    <!--<div class="notification-bar">
+        <div class="notification">
+            <i class="fas fa-bell"></i>
+            <p>0% on OC* 3 Bed Homes with Large Decl...</p>
+            <div class="notification-count">3</div>
+        </div>
+    </div>
+    <Main>
+        
+    </Main>

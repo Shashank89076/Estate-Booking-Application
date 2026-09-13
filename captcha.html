@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Are you a robot?</title>
+    <link rel="stylesheet" href="/captcha.css">
+    <script>
+        // Function to set CAPTCHA text from server session
+        function setCaptcha() {
+            fetch('/captcha')
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('captchaText').innerText = data.captcha;
+                    document.getElementById('captchaHidden').value = data.captcha;
+                });
+        }
+
+        window.onload = setCaptcha;
+
+        // Function to handle form submission
+        function handleFormSubmit(event) {
+            event.preventDefault();
+            const userInput = document.getElementById('userInput').value;
+            const captchaHidden = document.getElementById('captchaHidden').value;
+
+            fetch('/validate', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: `userInput=${userInput}&captcha=${captchaHidden}`,
+            })
+            .then(response => response.json())
+            .then(data => {
+                const message = document.getElementById('forgot-password-message');
+                if (data.success) {
+                    message.textContent = 'Congratulations, you are not a robot!!';
+                    message.style.display = 'block';
+                    setTimeout(() => {
+                        window.location.href = '/signup.html?captchaSuccess=true';
+                    }, 3000);
+                } else {
+                    message.textContent = 'The captcha is incorrect, please try again.';
+                    message.style.display = 'block';
+                    setCaptcha(); // Refresh CAPTCHA on failure
+                }
+            });
+        }
+    </script>
+</head>
+<body>
+    <div id="forgot-password-modal" class="form-container">
+        <h2>Are you a robot?</h2>
+        <form id="forgot-password-form" onsubmit="handleFormSubmit(event)">
+            <div class="form-group">
+                <label for="captcha">CAPTCHA: <span id="captchaText"></span></label>
+                <input type="hidden" id="captchaHidden" name="captcha">
+                <input type="text" id="userInput" name="userInput" placeholder="Enter CAPTCHA" required>
+            </div>
+            <button type="submit" class="submit-btn">Submit</button>
+            <small id="forgot-password-message"></small>
+        </form>
+    </div>
+</body>
+</html>
+

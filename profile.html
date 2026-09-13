@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile</title>
+    <link rel="stylesheet" href="/Main-styles.css">
+    <link rel="stylesheet" href="/profile.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <div class="menu-icon" onclick="toggleMenu()">
+                    <div class="menu-line"></div>
+                    <div class="menu-line"></div>
+                    <div class="menu-line"></div>
+                </div>
+
+                <li class="hidden"><a href="Untitled-2.html">................................................................................................................</a></li> 
+
+                <li><a href="login.html" id="login-link">Login</a></li>
+
+            </head>
+            <body>
+                <div class="login-container">
+                    <i class="fas fa-user-circle login-icon"></i>
+                </div>
+
+             <div class="dots" onclick="toggleMenu()">
+             <div class="dot"></div>
+             <div class="dot"></div>
+             <div class="dot"></div>
+             </div> 
+        </ul> 
+    </nav>
+</header>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="navbar">
+        <a href="Main-2.html" class="nav-item">
+            <i class="fas fa-home"></i>
+            <p>Home</p>
+        </a>
+        <div class="nav-item" onclick="showProfileSection()">
+            <i class="fas fa-user"></i>
+            <p>Profile</p>
+        </div>
+        <a href="health.html" class="nav-item">
+            <i class="fas fa-users"></i>
+            <p>Health</p>
+        </a>
+        <div class="nav-item">
+            <i class="fas fa-building"></i>
+            <p>Club</p>
+        </div>
+    </div>
+
+    <main id="main-content">
+        <!-- Profile Section -->
+        <div id="profile-section">
+            <div class="profile-container">
+                <h1>Profile Settings</h1>
+                <!-- Error Message for Not Logged In -->
+            <span id="login-error" class="error-message" style="color: red; font-size: 14px; display: none;">
+        <!-- Error message will be dynamically added here -->
+            </span>
+
+                <!-- Edit Button -->
+                <button id="edit-profile-btn" onclick="enableEditMode()">Edit</button>
+            
+                <!-- Save Button -->
+                <button id="save-profile-btn" onclick="saveProfile()" style="display: none;">Save Profile</button>
+
+                <button id="cancel-profile-btn" onclick="cancelEditMode()" style="display: none;">Cancel</button>
+
+                <form id="profile-form">
+                    <div class="form-group">
+                        <label for="first-name">First Name</label>
+                        <input type="text" id="first-name" placeholder="Enter First Name" readonly>
+                        <span id="first-name-error" class="error-message" style="color: red; font-size: 12px; display: none;">
+                            <!-- Error message for first name will appear here -->
+                        </span>
+                    </div>
+                    <div class="form-group">
+                        <label for="last-name">Last Name</label>
+                        <input type="text" id="last-name" placeholder="Enter Last Name" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">Mobile Number</label>
+                        <input type="text" id="phone" placeholder="Enter Phone Number" readonly>
+                        <span id="phone-error" class="error-message" style="color: red; font-size: 12px; display: none;">
+                            Please enter a valid 10-digit mobile number.
+                        </span>
+                    </div>
+                    <div class="form-group">
+                        <label for="address-line-1">Address Line 1</label>
+                        <input type="text" id="address-line-1" placeholder="Enter Address Line 1" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label for="address-line-2">Address Line 2</label>
+                        <input type="text" id="address-line-2" placeholder="Enter Address Line 2" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label for="city">City</label>
+                        <input type="text" id="city" placeholder="Enter City" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label for="state">State</label>
+                        <input type="text" id="state" placeholder="Enter State" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label for="country">Country</label>
+                        <input type="text" id="country" placeholder="Enter Country" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label for="education">Education</label>
+                        <input type="text" id="education" placeholder="Enter Education" readonly>
+                    </div>
+                </form>
+            </div>
+            
+    <script>
+
+
+// Enable edit mode: Make all fields editable and show Save button
+function enableEditMode() {
+    const username = sessionStorage.getItem('username'); // Check if username is stored in sessionStorage
+    const errorElement = document.getElementById('login-error'); // Reference to the error message element
+
+    // Check if the user is logged in
+    if (!username) {
+        // Display an error message if the user is not logged in
+        errorElement.style.display = 'block';
+        errorElement.textContent = 'Please log in to edit your profile.';
+        return; // Exit the function if the user is not logged in
+    } else {
+        // Hide the error message if the user is logged in
+        errorElement.style.display = 'none';
+    }
+
+    const fields = document.querySelectorAll('#profile-form input');
+    fields.forEach((field) => (field.readOnly = false)); // Make inputs editable
+
+    document.getElementById('edit-profile-btn').style.display = 'none'; // Hide Edit button
+    document.getElementById('save-profile-btn').style.display = 'block'; // Show Save button
+    document.getElementById('cancel-profile-btn').style.display = 'inline-block'; // Show Cancel button
+}
+
+
+// Save profile and exit edit mode
+async function saveProfile() {
+    const firstName = document.getElementById('first-name').value.trim();
+    const firstNameError = document.getElementById('first-name-error'); // Reference to the first name error message element
+    const phone = document.getElementById('phone').value.trim();
+    const phoneError = document.getElementById('phone-error'); // Reference the error message element
+
+     // Validate First Name
+     if (!firstName) {
+        firstNameError.style.display = 'block'; // Show the error message
+        firstNameError.textContent = 'First Name is required.';
+        return; // Stop the save process
+    } else {
+        firstNameError.style.display = 'none'; // Hide the error message if validation passes
+    }
+
+    // Regular expression to check for a valid 10-digit number
+    const phoneRegex = /^\d{10}$/;
+
+    // Validate phone number
+    if (!phoneRegex.test(phone)) {
+        phoneError.style.display = 'block'; // Show the error message
+        phoneError.textContent = 'Please enter a valid 10-digit mobile number.';
+        return; // Stop the save operation if validation fails
+    } else {
+        phoneError.style.display = 'none'; // Hide the error message
+    }
+
+    // Proceed to save the profile
+    const profileData = {
+        firstName: firstName,
+        lastName: document.getElementById('last-name').value.trim(),
+        phone: phone,
+        address: {
+            line1: document.getElementById('address-line-1').value.trim(),
+            line2: document.getElementById('address-line-2').value.trim(),
+            city: document.getElementById('city').value.trim(),
+            state: document.getElementById('state').value.trim(),
+            country: document.getElementById('country').value.trim(),
+        },
+        education: document.getElementById('education').value.trim(),
+    };
+
+    try {
+        const response = await fetch('/save-profile', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(profileData),
+        });
+
+        if (response.ok) {
+            alert('Profile updated successfully.');
+            await fetchProfileData(); // Reload profile data after saving
+            disableEditMode(); // Exit edit mode
+        } else {
+            alert('Error updating profile.');
+        }
+    } catch (error) {
+        console.error('Error saving profile:', error);
+        alert('Error saving profile.');
+    }
+}
+
+
+// Disable edit mode: Make fields read-only and show Edit button
+function disableEditMode() {
+    const fields = document.querySelectorAll('#profile-form input');
+    fields.forEach((field) => (field.readOnly = true)); // Make inputs read-only
+
+    document.getElementById('edit-profile-btn').style.display = 'block'; // Show Edit button
+    document.getElementById('save-profile-btn').style.display = 'none'; // Hide Save button
+    document.getElementById('cancel-profile-btn').style.display = 'none';
+
+}
+
+// Fetch profile data on page load
+window.onload = async () => {
+    await fetchProfileData();
+};
+
+        
+        async function fetchProfileData() {
+    const username = sessionStorage.getItem('username'); // Retrieve username from sessionStorage
+   
+
+    try {
+        const response = await fetch(`/get-profile`);
+        if (response.ok) {
+            const profileData = await response.json();
+            document.getElementById('first-name').value = profileData.firstName || '';
+            document.getElementById('last-name').value = profileData.lastName || '';
+            document.getElementById('phone').value = profileData.phone || '';
+            document.getElementById('address-line-1').value = profileData.address?.line1 || '';
+            document.getElementById('address-line-2').value = profileData.address?.line2 || '';
+            document.getElementById('city').value = profileData.address?.city || '';
+            document.getElementById('state').value = profileData.address?.state || '';
+            document.getElementById('country').value = profileData.address?.country || '';
+            document.getElementById('education').value = profileData.education || '';
+        } else {
+            console.error('Failed to fetch profile:', await response.text());
+        }
+    } catch (error) {
+        console.error('Error fetching profile:', error);
+    }
+}
+
+
+
+document.getElementById('profile-form').addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const username = sessionStorage.getItem('username'); // Ensure the username is included
+    if (!username) {
+        alert('Please log in again.');
+        return;
+    }
+
+    const phone = document.getElementById('phone').value.trim();
+    const phoneError = document.getElementById('phone-error'); // Reference to the error message element
+
+    // Regular expression to check for a valid 10-digit number
+    const phoneRegex = /^\d{10}$/;
+
+    if (!phoneRegex.test(phone)) {
+        phoneError.style.display = 'block'; // Show the error message
+        phoneError.textContent = 'Please enter a valid 10-digit mobile number.';
+        return; // Stop form submission
+    } else {
+        phoneError.style.display = 'none'; // Hide the error message if validation passes
+    }
+
+    const profileData = {
+        firstName: document.getElementById('first-name').value.trim(),
+        lastName: document.getElementById('last-name').value.trim(),
+        phone: phone,
+        address: {
+            line1: document.getElementById('address-line-1').value.trim(),
+            line2: document.getElementById('address-line-2').value.trim(),
+            city: document.getElementById('city').value.trim(),
+            state: document.getElementById('state').value.trim(),
+            country: document.getElementById('country').value.trim(),
+        },
+        education: document.getElementById('education').value.trim(),
+    };
+
+    try {
+        const response = await fetch('/save-profile', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(profileData),
+        });
+
+        if (response.ok) {
+            alert('Profile updated successfully.');
+            await fetchProfileData(); // Reload profile data after successful save
+        } else {
+            const errorText = await response.text();
+            console.error('Error response from server:', errorText);
+            alert('Error updating profile.');
+        }
+    } catch (error) {
+        console.error('Error saving profile:', error);
+        alert('Error saving profile.');
+    }
+    // Fetch profile data when the page loads
+window.onload = async () => {
+    const username = sessionStorage.getItem('username');
+    if (username) {
+        console.log('Username found in sessionStorage:', username)
+        await fetchProfileData();
+    } else {
+        alert('Please log in to view your profile.');
+        window.location.href = '/login.html'; // Redirect to login if username is missing
+    }
+};
+
+});
+
+function cancelEditMode() {
+    fetchProfileData(); // Reload saved profile data
+    disableEditMode();  // Exit edit mode
+}
+
+    </script>
+</body>
+</html>
+
